@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { galleryEvents } from "@/lib/gallery-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://pms-2026.com";
+  const baseUrl = "https://persatuanmahasiswasakit.my.id";
 
   // Base routes
   const routes = ["", "/daftar-anggota"].map((route) => ({
