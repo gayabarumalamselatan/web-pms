@@ -1,18 +1,17 @@
-"use client";
-
-import { useParams } from "next/navigation";
-import { galleryEvents } from "@/lib/gallery-data";
+import { getAlbumBySlug } from "@/app/actions/gallery";
 import { ScrollAnimation } from "@/components/ui/scroll-animation";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 
-export default function GalleryDetailPage() {
-  const params = useParams();
-  const slug = params.slug as string;
-
-  const event = galleryEvents.find((e) => e.slug === slug);
+export default async function GalleryDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const event = await getAlbumBySlug(slug);
 
   if (!event) {
     return notFound();
@@ -68,7 +67,6 @@ export default function GalleryDetailPage() {
 
         {/* Photos Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {/* If there are photos, show them; otherwise show placeholders */}
           {event.photos.length > 0
             ? event.photos.map((photo, index) => (
                 <ScrollAnimation
@@ -78,7 +76,7 @@ export default function GalleryDetailPage() {
                 >
                   <div className="brutal-card h-80 relative overflow-hidden p-0 bg-white hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
                     <div
-                      className={`absolute inset-0 ${photo.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}
+                      className={`absolute inset-0 bg-slate-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}
                     >
                       <Image
                         src={photo.url}
@@ -87,34 +85,19 @@ export default function GalleryDetailPage() {
                         className="object-cover"
                       />
                     </div>
-                    <div className="absolute top-4 right-4 bg-black text-white px-2 py-1 text-[8px] font-black uppercase z-20">
-                      IMG_00{photo.id}
-                    </div>
                   </div>
                 </ScrollAnimation>
               ))
             : // Placeholder grid if no photos yet
-              Array.from({ length: 8 }).map((_, i) => (
+              Array.from({ length: 4 }).map((_, i) => (
                 <ScrollAnimation
                   key={i}
                   delay={(i % 4) * 0.1}
                   className="group"
                 >
-                  <div className="brutal-card h-80 relative overflow-hidden p-0 bg-white hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
-                    <div
-                      className={`absolute inset-0 ${event.color} opacity-40 flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}
-                    >
-                      <span className="text-6xl grayscale opacity-30 group-hover:grayscale-0 group-hover:opacity-100 transition-all">
-                        📸
-                      </span>
-                    </div>
-                    <div className="absolute top-4 right-4 bg-black text-white px-2 py-1 text-[8px] font-black uppercase z-20">
-                      PLACEHOLDER
-                    </div>
-                    <div className="absolute bottom-4 left-4 right-4 bg-white/80 backdrop-blur-md p-2 border-2 border-black">
-                      <p className="text-[10px] font-black uppercase text-center">
-                        Photo {i + 1} Coming Soon
-                      </p>
+                  <div className="brutal-card h-80 relative overflow-hidden p-0 bg-white opacity-50">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-6xl grayscale opacity-30">📸</span>
                     </div>
                   </div>
                 </ScrollAnimation>

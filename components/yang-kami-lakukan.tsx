@@ -2,52 +2,18 @@
 
 import { ScrollAnimation } from "./ui/scroll-animation";
 
-const activities = [
-  {
-    image: "/images/activity-workshop.png",
-    title: "Workshop & Seminar",
-    description:
-      "Mengadakan berbagai workshop edukatif untuk meningkatkan skill dan pengetahuan anggota.",
-    color: "bg-blue-400",
-  },
-  {
-    image: "/images/activity-sports.png",
-    title: "Olahraga & Aktivitas",
-    description:
-      "Mengorganisir turnamen olahraga, hiking, dan berbagai aktivitas fisik seru.",
-    color: "bg-secondary",
-  },
-  {
-    image: "/images/activity-event.png",
-    title: "Event Sosial",
-    description:
-      "Gathering, game night, movie marathon, dan acara kebersamaan yang penuh tawa.",
-    color: "bg-yellow-400",
-  },
-  {
-    image: "/images/activity-social.png",
-    title: "Aksi Sosial",
-    description:
-      "Program CSR, donor darah, dan kegiatan untuk membantu komunitas sekitar.",
-    color: "bg-primary-light",
-  },
-  {
-    image: "/images/activity-talent.png",
-    title: "Talent Show",
-    description:
-      "Platform untuk menampilkan bakat, seni, musik, dan potensi kreatif anggota.",
-    color: "bg-orange-400",
-  },
-  {
-    image: "/images/activity-travel.png",
-    title: "Travel & Eksplorasi",
-    description:
-      "Studi banding, wisata, dan petualangan ke berbagai tempat menarik bersama-sama.",
-    color: "bg-sky",
-  },
-];
+export function YangKamiLakukan({ activities }: { activities: any[] }) {
+  const displayActivities = activities.length > 0 ? activities : [
+    {
+      imagePath: "/images/activity-workshop.png",
+      title: "Workshop & Seminar",
+      description:
+        "Mengadakan berbagai workshop edukatif untuk meningkatkan skill dan pengetahuan anggota.",
+      color: "bg-blue-400",
+    },
+    // ... other defaults if needed, but keeping it clean
+  ];
 
-export function YangKamiLakukan() {
   return (
     <section
       id="aktivitas"
@@ -64,7 +30,7 @@ export function YangKamiLakukan() {
 
         {/* Activities Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {activities.map((activity, index) => (
+          {(activities.length > 0 ? activities : displayActivities).map((activity, index) => (
             <ScrollAnimation
               key={index}
               delay={(index % 3) * 0.1}
@@ -77,7 +43,7 @@ export function YangKamiLakukan() {
                   className={`relative w-full h-56 border-b-4 border-black overflow-hidden ${activity.color}`}
                 >
                   <img
-                    src={activity.image}
+                    src={activity.imagePath || activity.image}
                     alt={activity.title}
                     className="w-full h-full object-cover mix-blend-multiply opacity-80 transition-transform duration-500 group-hover:scale-110"
                   />

@@ -1,0 +1,83 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Member {
+  id        String @id @default(cuid())
+  name      String
+  julukan   String? // Nickname
+  position  String
+  imagePath String? // Profile image path
+  publicId  String? // Cloudinary public id
+  status    String  // Active or Inactive
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Greeting {
+  id    String @id @default("sambutan")
+  text  String @db.Text
+  updatedAt DateTime @updatedAt
+}
+
+model Activity {
+  id          String @id @default(cuid())
+  imagePath   String
+  publicId    String? // Cloudinary public id
+  title       String
+  description String @db.Text
+  color       String // Tailwind background color class (e.g., bg-sky)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model GalleryAlbum {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  date        String
+  description String   @db.Text
+  color       String
+  span        String   @default("md:col-span-1")
+  photos      Photo[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Photo {
+  id      String @id @default(cuid())
+  url     String
+  publicId String? // Cloudinary public id
+  alt     String
+  color   String
+  albumId String
+  album   GalleryAlbum @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SocialMedia {
+  id        String @id @default(cuid())
+  name      String
+  handle    String
+  link      String
+  color     String
+  iconType  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String   // Hashed password
+  name      String
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

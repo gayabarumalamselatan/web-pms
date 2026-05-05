@@ -1,66 +1,13 @@
-"use client";
-
 import { MemberCard } from "@/components/member-card";
 import Link from "next/link";
 import { ChevronLeft, Users } from "lucide-react";
 import { ScrollAnimation } from "@/components/ui/scroll-animation";
+import { getMembers } from "@/app/actions/members";
+import { Key } from "react";
 
-const members = [
-  {
-    name: "Rizki Pratama",
-    position: "Ketua Umum",
-    image: "/images/member-1.png",
-  },
-  {
-    name: "Siti Nurhaliza",
-    position: "Wakil Ketua",
-    image: "/images/member-2.png",
-  },
-  {
-    name: "Ahmad Gunawan",
-    position: "Sekretaris",
-    image: "/images/member-3.png",
-  },
-  { name: "Dina Kusuma", position: "Bendahara", image: "/images/member-4.png" },
-  {
-    name: "Budi Santoso",
-    position: "Divisi Acara",
-    image: "/images/member-5.png",
-  },
-  {
-    name: "Livia Wijaya",
-    position: "Divisi Sosial",
-    image: "/images/member-6.png",
-  },
-  {
-    name: "Fajar Ramadan",
-    position: "Divisi Olahraga",
-    image: "/images/member-1.png",
-  },
-  {
-    name: "Mega Putri",
-    position: "Divisi Kreatif",
-    image: "/images/member-2.png",
-  },
-  {
-    name: "Rian Hermawan",
-    position: "Divisi IT",
-    image: "/images/member-3.png",
-  },
-  { name: "Citra Dewi", position: "Divisi PR", image: "/images/member-4.png" },
-  {
-    name: "Yuki Tanaka",
-    position: "Anggota Aktif",
-    image: "/images/member-5.png",
-  },
-  {
-    name: "Aldi Mardana",
-    position: "Anggota Aktif",
-    image: "/images/member-6.png",
-  },
-];
+export default async function DaftarAnggotaPage() {
+  const members = await getMembers();
 
-export default function DaftarAnggotaPage() {
   return (
     <main className="min-h-screen bg-[#FAFBFD] pt-24 pb-20 px-4">
       {/* Brutalist Sticky Header */}
@@ -101,44 +48,28 @@ export default function DaftarAnggotaPage() {
 
         {/* members Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {members.map((member, index) => (
-            <MemberCard
-              key={index}
-              name={member.name}
-              position={member.position}
-              image={member.image}
-              index={index}
-            />
-          ))}
+          {members.map(
+            (
+              member: {
+                id: Key | null | undefined;
+                name: string;
+                julukan: any;
+                position: string;
+                imagePath: any;
+              },
+              index: number,
+            ) => (
+              <MemberCard
+                key={member.id}
+                name={member.name}
+                julukan={member.julukan || ""}
+                position={member.position}
+                image={member.imagePath || "/images/member-1.png"}
+                index={index}
+              />
+            ),
+          )}
         </div>
-
-        {/* Bottom CTA Panel */}
-        {/* <ScrollAnimation
-          direction="up"
-          className="mt-32 brutal-card bg-primary text-white p-12 text-center relative overflow-hidden"
-        >
-          
-          <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/20 translate-x-16 -translate-y-16 rotate-45" />
-
-          <h3 className="text-4xl md:text-6xl text-black uppercase tracking-tighter mb-8 leading-none">
-            WANT TO <span className="text-yellow-400 italic">BECOME</span>{" "}
-            <br /> ONE OF US?
-          </h3>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link
-              href="/"
-              className="brutal-btn bg-white text-black hover:bg-gray-100"
-            >
-              CONTACT US NOW!
-            </Link>
-            <Link
-              href="/"
-              className="brutal-btn bg-black text-white border-white hover:border-black"
-            >
-              SEE REQUIREMENTS
-            </Link>
-          </div>
-        </ScrollAnimation> */}
       </div>
     </main>
   );

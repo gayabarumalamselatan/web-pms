@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { ScrollAnimation } from "./ui/scroll-animation";
 
-export function SambutanKetua() {
+export function SambutanKetua({ greeting }: { greeting: any }) {
   return (
     <section
       id="sambutan"
@@ -64,21 +64,21 @@ export function SambutanKetua() {
               <div className="w-24 h-2 bg-gray-400" />
             </div>
 
-            <div className="space-y-6 text-gray-900 font-bold text-lg md:text-xl leading-snug">
-              <p>
-                Salam, teman-teman! PMS bukan sekadar organisasi. Ini adalah
-                pergerakan. Sebuah wadah di mana ambisi bertemu dengan kegilaan
-                kreatif.
-              </p>
-              <p>
-                Kami tidak membangun hierarki; kami membangun komunitas. Tempat
-                di mana setiap suara didengar dan setiap bakat dihargai secara
-                brutal.
-              </p>
-              <p>
-                Mari bergabung dan rasakan bagaimana rasanya menjadi bagian dari
-                sesuatu yang benar-benar besar.
-              </p>
+            <div className="space-y-6 text-gray-900 font-bold text-lg md:text-xl leading-snug whitespace-pre-wrap">
+              {greeting?.text || (
+                <>
+                  <p>
+                    Salam, teman-teman! PMS bukan sekadar organisasi. Ini adalah
+                    pergerakan. Sebuah wadah di mana ambisi bertemu dengan kegilaan
+                    kreatif.
+                  </p>
+                  <p>
+                    Kami tidak membangun hierarki; kami membangun komunitas. Tempat
+                    di mana setiap suara didengar dan setiap bakat dihargai secara
+                    brutal.
+                  </p>
+                </>
+              )}
             </div>
 
             {/* Brutalist Stats */}

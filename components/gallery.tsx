@@ -7,12 +7,11 @@ import { galleryEvents } from "@/lib/gallery-data";
 import { Camera } from "lucide-react";
 import Image from "next/image";
 
-export function Gallery() {
+export function Gallery({ albums = [] }: { albums?: any[] }) {
   const [showAll, setShowAll] = useState(false);
-  const displayedImages = showAll ? galleryEvents : galleryEvents.slice(0, 6);
+  const dataToDisplay = albums.length > 0 ? albums : galleryEvents;
+  const displayedImages = showAll ? dataToDisplay : dataToDisplay.slice(0, 6);
 
-  const image = galleryEvents.map((event) => event.photos);
-  console.log(displayedImages);
   return (
     <section
       id="gallery"
@@ -44,22 +43,15 @@ export function Gallery() {
                 <div className="relative w-full h-full border-4 border-black bg-white brutal-shadow-hover transition-all duration-300 overflow-hidden">
                   {/* Image Placeholder with Solid Color & Contrast */}
                   <Image
-                    src={item.photos[0]?.url || "/placeholder.svg"}
+                    src={item.photos?.[0]?.url || item.image || "/placeholder.svg"}
                     alt={item.title}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* <div
-                    className={`absolute inset-0 ${item.color} flex items-center justify-center transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1`}
-                  >
-                    <div className="text-center p-6 mix-blend-difference opacity-20 group-hover:opacity-100 transition-opacity">
-                      <Camera className="text-7xl block mb-3  group-hover:animate-bounce" />
-                    </div>
-                  </div> */}
 
                   {/* Overlapping Brutalist Label Top Right */}
                   <div className="absolute top-4 right-4 bg-black text-white px-3 py-1 font-black uppercase text-[10px] rotate-3 z-30 group-hover:rotate-0 transition-transform">
-                    {item.id.toString().padStart(3, "0")}
+                    {index.toString().padStart(3, "0")}
                   </div>
 
                   {/* BOTTOM LEFT INFO CARD */}
@@ -83,7 +75,7 @@ export function Gallery() {
         </div>
 
         {/* Show More Button - Brutalist style */}
-        {!showAll && (
+        {!showAll && dataToDisplay.length > 6 && (
           <ScrollAnimation
             direction="none"
             className="flex justify-center mt-12"

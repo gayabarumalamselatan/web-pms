@@ -78,8 +78,32 @@ const NavigationPanels = [
   },
 ];
 
-export function TemukanKami() {
+export function TemukanKami({ socials = [] }: { socials?: any[] }) {
   const { scrollTo } = useSmoothScroll();
+  const displaySocials = socials.length > 0 ? socials : [
+    {
+      name: "Instagram",
+      iconType: "instagram",
+      handle: "@persatuanmahasiswasakit",
+      link: "https://www.instagram.com/persatuanmahasiswasakit?igsh=bnE4b2VwNmJuMGg5",
+      color: "bg-pink-400",
+    },
+    {
+      name: "WhatsApp",
+      iconType: "whatsapp",
+      handle: "Contact Us",
+      link: "#",
+      color: "bg-green-400",
+    },
+  ];
+
+  const getIcon = (type: string) => {
+    switch (type.toLowerCase()) {
+      case "instagram": return <InstagramIcon />;
+      case "whatsapp": return "💬";
+      default: return "🔗";
+    }
+  };
 
   const handleLinkClick = (e: any, item: any) => {
     if (item.scrollTarget) {
@@ -111,7 +135,7 @@ export function TemukanKami() {
 
           {/* Social Media Grid - Brutalist cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-            {socialMedia.map((social, index) => (
+            {displaySocials.map((social, index) => (
               <ScrollAnimation
                 key={index}
                 delay={index * 0.05}
@@ -123,7 +147,7 @@ export function TemukanKami() {
                   >
                     <div className="flex justify-between items-start">
                       <div className="text-5xl group-hover:scale-125 transition-transform duration-300">
-                        {social.icon}
+                        {getIcon(social.iconType || social.name)}
                       </div>
                       <div className="text-black px-3 py-1 text-xs font-black uppercase transform group-hover:rotate-12 transition-transform">
                         LIVE NOW
