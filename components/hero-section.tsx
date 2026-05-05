@@ -61,17 +61,17 @@ export function HeroSection() {
           {/* Brutalist Badge */}
           <div className="absolute -top-6 -right-12 bg-secondary border-4 border-black px-6 py-2 brutal-shadow rotate-12">
             <p className="font-black text-black text-xl uppercase tracking-tighter">
-              Official 2026
+              PMS
             </p>
           </div>
         </motion.div>
 
         {/* Title Section */}
         <motion.div style={{ y: textY }} className="max-w-4xl">
-          <h1 className="text-6xl md:text-7xl font-black text-black leading-none tracking-tighter mb-4">
+          <h1 className="text-6xl md:text-7xl font-black text-black leading-none tracking-tighter mb-4 hidden md:block">
             PMS <span className="text-primary italic">2026</span>
           </h1>
-          <div className="inline-block bg-black text-white px-8 py-4 -rotate-1 mb-8">
+          <div className="bg-black text-white px-8 py-4 -rotate-1 mb-8 hidden md:inline-block">
             <p className="text-2xl md:text-3xl font-black uppercase">
               Persatuan Mahasiswa Sakit
             </p>

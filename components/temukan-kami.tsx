@@ -80,28 +80,34 @@ const NavigationPanels = [
 
 export function TemukanKami({ socials = [] }: { socials?: any[] }) {
   const { scrollTo } = useSmoothScroll();
-  const displaySocials = socials.length > 0 ? socials : [
-    {
-      name: "Instagram",
-      iconType: "instagram",
-      handle: "@persatuanmahasiswasakit",
-      link: "https://www.instagram.com/persatuanmahasiswasakit?igsh=bnE4b2VwNmJuMGg5",
-      color: "bg-pink-400",
-    },
-    {
-      name: "WhatsApp",
-      iconType: "whatsapp",
-      handle: "Contact Us",
-      link: "#",
-      color: "bg-green-400",
-    },
-  ];
+  const displaySocials =
+    socials.length > 0
+      ? socials
+      : [
+          {
+            name: "Instagram",
+            iconType: "instagram",
+            handle: "@persatuanmahasiswasakit",
+            link: "https://www.instagram.com/persatuanmahasiswasakit?igsh=bnE4b2VwNmJuMGg5",
+            color: "bg-pink-400",
+          },
+          {
+            name: "WhatsApp",
+            iconType: "whatsapp",
+            handle: "Contact Us",
+            link: "#",
+            color: "bg-green-400",
+          },
+        ];
 
   const getIcon = (type: string) => {
     switch (type.toLowerCase()) {
-      case "instagram": return <InstagramIcon />;
-      case "whatsapp": return "💬";
-      default: return "🔗";
+      case "instagram":
+        return <InstagramIcon />;
+      case "whatsapp":
+        return "💬";
+      default:
+        return "🔗";
     }
   };
 
@@ -219,7 +225,7 @@ export function TemukanKami({ socials = [] }: { socials?: any[] }) {
                 </span>
               </div>
               <p className="text-gray-800 font-bold leading-snug uppercase text-sm">
-                Persatuan Mahasiswa Sakit 2025. <br />
+                Persatuan Mahasiswa Sakit 2026. <br />
                 Membangun komunitas yang positif, inklusif, dan gila kreatif.
               </p>
             </div>
